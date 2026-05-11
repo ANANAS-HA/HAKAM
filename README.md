@@ -1,6 +1,6 @@
-# Sports-QA Knowledge Distillation: Qwen3.5-VL 27 B → 0.8 B
+# Sports-QA Knowledge Distillation: Qwen3.5 27 B → 0.8 B
 
-**Graduation Project 2 submission.** Recipe-A free-generation distillation of a 27 B AWQ-Int4 Qwen3.5-VL teacher into a 0.8 B LoRA-adapted student for sports video question answering on the Sports-QA dataset.
+**Graduation Project 2 submission.** Recipe-A free-generation distillation of a 27 B AWQ-Int4 Qwen3.5 teacher into a 0.8 B LoRA-adapted student for sports video question answering on the Sports-QA dataset.
 
 ---
 
@@ -10,9 +10,9 @@ The 3-epoch LoRA student matches the 27 B teacher's accuracy within statistical 
 
 | model | params | gold-fuzzy accuracy ¹ | text-similarity to teacher ² |
 |---|---:|---:|---:|
-| Vanilla Qwen3.5-VL 0.8 B | 0.8 B | 22.7 % | 0.172 |
+| Vanilla Qwen3.5 0.8 B | 0.8 B | 22.7 % | 0.172 |
 | **Trained student (3 epochs LoRA r=16)** | **0.8 B + 6.4 M LoRA** | **39.9 %** | **0.323** |
-| Teacher (Qwen3.5-VL 27 B AWQ-Int4) | 27 B | 39.7 % | (reference) |
+| Teacher (Qwen3.5 27 B AWQ-Int4) | 27 B | 39.7 % | (reference) |
 
 Student vs teacher Δ = +0.2 pp (well within the ±3 pp 95 % binomial CI at n=1 000). The student even beats the teacher on **Counterfactual** questions (82.0 % vs 70.0 %, n=150).
 
@@ -87,7 +87,7 @@ See [`figures/F2_headline_accuracy.png`](figures/F2_headline_accuracy.png) for t
 
 | artifact | where | why not here |
 |---|---|---|
-| Trained LoRA adapter | **<TODO: HF Hub URL — `<username>/sportsqa-distill-qwen3p5-0p8b-lora>`>** | 25 MB safetensors; lives where HF Hub workflows expect models |
+| Trained LoRA adapter | **<TODO: HF Hub URL — `<ananas0/qwen3.5-0.8b-sportsqa-distill-lora>`>** | 25 MB safetensors; lives where HF Hub workflows expect models |
 | Sports-QA upstream dataset (train/val/test JSON + videos) | **<TODO: original Sports-QA repo URL>** | ~110 GB total (videos + metadata); cite the original publication |
 | Teacher logit cache (~11 680 .pt files, 347 MB) | **<TODO: HF Hub dataset URL if released; otherwise re-extract per RUNBOOK_RENTAL.md>** | Easier to re-extract on H100 than to host |
 
@@ -165,7 +165,7 @@ The pipeline survived several non-trivial environment issues during development.
 - **PEFT ↔ gptqmodel version skew.** `dispatch_awq` imports a class that gptqmodel 7.0.0 renamed. The 0.8 B student isn't AWQ-quantized, so the dispatcher is irrelevant — monkey-patched to no-op at the top of `train_student.py`.
 - **WSL2 CPU RAM cap.** Upfront vision feature caching (525 unique videos × ~80 MB ≈ 42 GB) blew past WSL2's default 15 GB limit. Mitigated with a video-major lazy-decoding training loop (RAM peak ≈ 1 video). `--pod_mode` opts back into the original upfront-cache strategy on the rented 172 GB pod.
 - **WSL2/CUDA driver race.** Non-deterministic `CUDA driver error: unknown error` on the first training backward. Mitigated with `attn_implementation="eager"`, `CUDA_LAUNCH_BLOCKING=1`, and a real-shape warmup forward+backward. `--pod_mode` skips these on real Linux.
-- **`mm_token_type_ids` length mismatch.** Qwen3.5-VL's `get_rope_index` slices that tensor with the attention mask; when manually concatenating gen tokens, the type IDs must be extended too. Fixed at `train_student.py:append_gen_tokens`.
+- **`mm_token_type_ids` length mismatch.** Qwen3.5's `get_rope_index` slices that tensor with the attention mask; when manually concatenating gen tokens, the type IDs must be extended too. Fixed at `train_student.py:append_gen_tokens`.
 
 ---
 
