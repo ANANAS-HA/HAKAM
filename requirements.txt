@@ -1,0 +1,19 @@
+# Pinned where the project needs a specific minimum; loose otherwise so we
+# don't fight Colab's preinstalled torch / CUDA stack.
+
+# Core HF stack — must support Qwen3.5's qwen3_5 model_type
+transformers>=5.5,<6
+accelerate>=1.0
+
+# Project-specific (NOT preinstalled on Colab)
+qwen-vl-utils>=0.0.14
+decord>=0.6
+av>=10                # video-decoder fallback used by qwen_vl_utils
+
+# torchvision is imported transitively by qwen_vl_utils.vision_process.
+# Colab ships a torchvision matched to its torch; pip will skip if already satisfied.
+torchvision
+
+# Notebook extras — only needed if the mate runs the tutorial / chatbot notebooks
+matplotlib>=3.5
+ipywidgets>=8

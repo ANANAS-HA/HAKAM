@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Large data — distribute via HF Hub or upstream Sports-QA
+videos/
+logits_cache_subset/
+logits_cache_subset_final/
+
+# Trained adapters — distribute via HF Hub
+student_lora/
+student_lora_full3epoch/
+
+# Backups, OS junk
+*.bak
+.DS_Store
+Thumbs.db
+*.Zone.Identifier

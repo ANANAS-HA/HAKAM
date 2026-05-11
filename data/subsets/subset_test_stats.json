@@ -1,0 +1,37 @@
+{
+  "test": {
+    "videos": 480,
+    "questions": 2793,
+    "per_sport_videos": {
+      "Gym": 60,
+      "volleyball": 60,
+      "football": 60,
+      "basketball": 60,
+      "Balance_Beam": 60,
+      "Uneven_Bar": 60,
+      "Vault": 60,
+      "Floor_Exercise": 60
+    },
+    "per_sport_questions": {
+      "Gym": 360,
+      "volleyball": 398,
+      "football": 478,
+      "basketball": 297,
+      "Balance_Beam": 360,
+      "Uneven_Bar": 360,
+      "Vault": 180,
+      "Floor_Exercise": 360
+    },
+    "per_question_type": {
+      "Descriptive": 1440,
+      "Temporal": 913,
+      "Causal": 320,
+      "Counterfactual": 120
+    },
+    "yes_no": {
+      "yes": 136,
+      "no": 229,
+      "ratio": 0.3726
+    }
+  }
+}

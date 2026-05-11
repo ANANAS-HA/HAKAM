@@ -1,0 +1,54 @@
+{
+  "train": {
+    "videos": 1600,
+    "questions": 8937,
+    "per_sport": {
+      "Gym": 200,
+      "volleyball": 200,
+      "football": 200,
+      "basketball": 200,
+      "Uneven_Bar": 200,
+      "Vault": 200,
+      "Floor_Exercise": 200,
+      "Balance_Beam": 200
+    },
+    "per_question_type": {
+      "Descriptive": 4614,
+      "Temporal": 2965,
+      "Causal": 1032,
+      "Counterfactual": 326
+    },
+    "yes_no": {
+      "yes": 486,
+      "no": 486,
+      "ratio": 0.5,
+      "dropped": 253
+    }
+  },
+  "val": {
+    "videos": 480,
+    "questions": 2743,
+    "per_sport": {
+      "Gym": 60,
+      "volleyball": 60,
+      "football": 60,
+      "basketball": 60,
+      "Uneven_Bar": 60,
+      "Floor_Exercise": 60,
+      "Balance_Beam": 60,
+      "Vault": 60
+    },
+    "per_question_type": {
+      "Descriptive": 1390,
+      "Temporal": 909,
+      "Causal": 339,
+      "Counterfactual": 105
+    },
+    "yes_no": {
+      "yes": 153,
+      "no": 153,
+      "ratio": 0.5,
+      "dropped": 68
+    }
+  }
+}
