@@ -25,7 +25,6 @@ See [`figures/F2_headline_accuracy.png`](figures/F2_headline_accuracy.png) for t
 
 ## What's in this repo
 
-
 ### Result reports (held-out + test set)
 
 | file | content |
