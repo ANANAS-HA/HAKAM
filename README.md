@@ -77,7 +77,7 @@ See [`figures/F2_headline_accuracy.png`](figures/F2_headline_accuracy.png) for t
 |---|---|---|
 | Trained LoRA adapter | **<TODO: HF Hub URL — `<ananas0/qwen3.5-0.8b-sportsqa-distill-lora>`>** | 25 MB safetensors; lives where HF Hub workflows expect models |
 | Sports-QA upstream dataset (train/val/test JSON + videos) | **<TODO: original Sports-QA repo URL>** | ~110 GB total (videos + metadata); cite the original publication |
-| Teacher logit cache (~11 680 .pt files, 347 MB) | **<TODO: HF Hub dataset URL if released; otherwise re-extract per RUNBOOK_RENTAL.md>** | Easier to re-extract on H100 than to host |
+| Teacher logit cache (~11 680 .pt files, 347 MB) | **<TODO: HF Hub dataset URL if released; otherwise re-extract on a rented H100>** | Easier to re-extract on H100 than to host |
 
 After you fill in the HF Hub adapter URL, also update the loading example below.
 
@@ -99,7 +99,7 @@ model = PeftModel.from_pretrained(base, "ananas0/qwen3.5-0.8b-sportsqa-distill-l
 model.eval()
 ```
 
-Full reproduction (in pipeline order — see also [`vanilla_train_test_logits_handling.md`](vanilla_train_test_logits_handling.md) §15):
+Full reproduction (in pipeline order):
 
 ```bash
 # 0. Environment
@@ -114,7 +114,6 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python download_subset_videos.py --repo-id <USER>/<VIDEOS_REPO> --token <HF_TOKEN>
 
 # 3. Extract teacher logits — RENTED GPU REQUIRED (~50 hr H100-NVL, ~$67)
-#    See RUNBOOK_RENTAL.md for the pod-side commands.
 ssh <pod> 'cd /workspace/<project> && python -u extract_logits_subset.py --split both'
 
 # 4. rsync logit cache back to the local box
@@ -148,7 +147,7 @@ Per-stage cost estimate (Vast.ai H100-NVL @ ~$1.33/hr):
 
 ## Engineering notes
 
-The pipeline survived several non-trivial environment issues during development. All are documented in [`vanilla_train_test_logits_handling.md`](vanilla_train_test_logits_handling.md) §8 and [`appendix_materials.md`](appendix_materials.md) §6. Highlights:
+The pipeline survived several non-trivial environment issues during development. Highlights:
 
 - **PEFT ↔ gptqmodel version skew.** `dispatch_awq` imports a class that gptqmodel 7.0.0 renamed. The 0.8 B student isn't AWQ-quantized, so the dispatcher is irrelevant — monkey-patched to no-op at the top of `train_student.py`.
 - **WSL2 CPU RAM cap.** Upfront vision feature caching (525 unique videos × ~80 MB ≈ 42 GB) blew past WSL2's default 15 GB limit. Mitigated with a video-major lazy-decoding training loop (RAM peak ≈ 1 video). `--pod_mode` opts back into the original upfront-cache strategy on the rented 172 GB pod.
