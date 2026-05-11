@@ -25,17 +25,6 @@ See [`figures/F2_headline_accuracy.png`](figures/F2_headline_accuracy.png) for t
 
 ## What's in this repo
 
-### Reports & methodology
-
-| file | content |
-|---|---|
-| [`GP2_REPORT_SOURCE.md`](GP2_REPORT_SOURCE.md) | 9-section source-of-truth doc for the GP2 final report. Maps onto the official chapter template. |
-| [`METHODOLOGY_REPORT.md`](METHODOLOGY_REPORT.md) | Chronological academic methodology write-up: every experimental decision and the evidence that motivated it. |
-| [`vanilla_train_test_logits_handling.md`](vanilla_train_test_logits_handling.md) | End-to-end technical reference (15 sections). |
-| [`SUBSET_HANDLING.md`](SUBSET_HANDLING.md) | Subset construction (per-sport sampling, yes/no rebalancing, FineGym sub-event recovery). |
-| [`LOGITS_REPORT.md`](LOGITS_REPORT.md) | Early logit-extraction experiment record. |
-| [`RUNBOOK_RENTAL.md`](RUNBOOK_RENTAL.md) | Step-by-step rental → extraction commands for the H100-NVL pod. |
-| [`appendix_materials.md`](appendix_materials.md) | Appendix source: verbatim configs, environment versions, file inventory. |
 
 ### Result reports (held-out + test set)
 
