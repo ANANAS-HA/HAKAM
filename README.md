@@ -75,7 +75,7 @@ See [`figures/F2_headline_accuracy.png`](figures/F2_headline_accuracy.png) for t
 
 | artifact | where | why not here |
 |---|---|---|
-| Trained LoRA adapter | **<TODO: HF Hub URL — `<ananas0/qwen3.5-0.8b-sportsqa-distill-lora>`>** | 25 MB safetensors; lives where HF Hub workflows expect models |
+| Trained LoRA adapter | **<TODO: HF Hub URL — `<ananas0/Hakam-0.8b-sportsqa-distill-lora>`>** | 25 MB safetensors; lives where HF Hub workflows expect models |
 | Sports-QA upstream dataset (train/val/test JSON + videos) | **<TODO: original Sports-QA repo URL>** | ~110 GB total (videos + metadata); cite the original publication |
 | Teacher logit cache (~11 680 .pt files, 347 MB) | **<TODO: HF Hub dataset URL if released; otherwise re-extract on a rented H100>** | Easier to re-extract on H100 than to host |
 
@@ -95,7 +95,7 @@ base = AutoModelForImageTextToText.from_pretrained(
     "Qwen/Qwen3.5-0.8B", dtype=torch.bfloat16,
     device_map="cuda", trust_remote_code=True,
 )
-model = PeftModel.from_pretrained(base, "ananas0/qwen3.5-0.8b-sportsqa-distill-lora")
+model = PeftModel.from_pretrained(base, "ananas0/Hakam-0.8b-sportsqa-distill-lora")
 model.eval()
 ```
 
